@@ -4,12 +4,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using MoiteRecepti.Data;
     using MoiteRecepti.Data.Common.Repositories;
     using MoiteRecepti.Data.Models;
     using MoiteRecepti.Data.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
 
     using Moq;
 

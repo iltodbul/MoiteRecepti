@@ -3,9 +3,9 @@ namespace MoiteRecepti.Data.Models
 {
     using System;
 
-    using MoiteRecepti.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+
+    using MoiteRecepti.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

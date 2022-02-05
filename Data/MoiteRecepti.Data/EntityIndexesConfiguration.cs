@@ -2,9 +2,9 @@
 {
     using System.Linq;
 
-    using MoiteRecepti.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+
+    using MoiteRecepti.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

@@ -2,9 +2,9 @@
 {
     using System.Diagnostics;
 
-    using MoiteRecepti.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+
+    using MoiteRecepti.Web.ViewModels;
 
     public class HomeController : BaseController
     {

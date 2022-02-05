@@ -5,6 +5,12 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+
     using MoiteRecepti.Data;
     using MoiteRecepti.Data.Common;
     using MoiteRecepti.Data.Common.Repositories;
@@ -13,13 +19,6 @@
     using MoiteRecepti.Data.Seeding;
     using MoiteRecepti.Services.Data;
     using MoiteRecepti.Services.Messaging;
-
-    using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
 
     public static class Program
     {
