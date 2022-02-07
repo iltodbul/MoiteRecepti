@@ -1,9 +1,29 @@
 ﻿@using MoiteRecepti.Common
+@using MoiteRecepti.Web.ViewModels.Home
+@model IndexViewModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Recipes Count</th>
+                <th>Categories Count</th>
+                <th>Ingredients Count</th>
+                <th>ImagesCount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.RecipesCount</td>
+                <td>@Model.CategoriesCount</td>
+                <td>@Model.IngredientsCount</td>
+                <td>@Model.ImagesCount</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
