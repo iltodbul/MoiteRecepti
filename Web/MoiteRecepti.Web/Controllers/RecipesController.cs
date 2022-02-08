@@ -1,6 +1,7 @@
 ﻿namespace MoiteRecepti.Web.Controllers
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,14 @@
     public class RecipesController : Controller
     {
         private readonly ICategoryService categoryService;
+        private readonly IRecipeService recipeService;
 
-        public RecipesController(ICategoryService categoryService)
+        public RecipesController(
+            ICategoryService categoryService,
+            IRecipeService recipeService)
         {
             this.categoryService = categoryService;
+            this.recipeService = recipeService;
         }
 
         public IActionResult Create()
@@ -27,7 +32,7 @@
         }
 
         [HttpPost]
-        public IActionResult Create(CreateRecipeInputModel inputModel)
+        public async Task<IActionResult> Create(CreateRecipeInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
             {
@@ -35,7 +40,8 @@
                 return this.View(inputModel);
             }
 
-            // TODO: Create recipe using service method
+            // return this.Json(inputModel);
+            await this.recipeService.CreateAsync(inputModel);
             // TODO: Redirect to recipe info page.
             return this.Redirect("/");
         }

@@ -4,7 +4,7 @@
 
 @{
     this.ViewData["Title"] = "Add new recipe";
-    var categoryItems = this.Model.Categories.Select(x=> new SelectListItem(x.Value, x.Key));
+    var categoryItems = this.Model.Categories.Select(x => new SelectListItem(x.Value, x.Key));
 }
 
 <h1 class="text-center">@this.ViewData["Title"]</h1>
@@ -39,10 +39,26 @@
     <div class="form-group">
         <label asp-for="CategoryId"></label>
         <select asp-for="CategoryId" class="form-control" asp-items="categoryItems">
-
         </select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
-    
-    <input type="submit" class="btn btn-primary"/>
+
+    <div id="ingredientsContainer">
+        <label asp-for="Ingredients"></label>
+        <a class="btn btn-success" onclick="AddMoreIngredients()">+</a>
+    </div>
+
+    <input type="submit" class="btn btn-primary" />
 </form>
+
+@section Scripts
+{
+    <script>
+        var index = 0;
+
+        function AddMoreIngredients() {
+            $("#ingredientsContainer").append("<div>Name: <input type='text' name='Ingredients[" + index + "].IngredientName' /> Quantity: <input type='text' name='Ingredients[" + index + "].Quantity' /> </div>");
+            index++;
+        }
+    </script>
+}
