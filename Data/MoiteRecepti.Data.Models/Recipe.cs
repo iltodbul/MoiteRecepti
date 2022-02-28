@@ -15,13 +15,15 @@
 
         public string Name { get; set; }
 
-        public string Instruction { get; set; }
+        public string Instructions { get; set; }
 
         public TimeSpan PreparationTime { get; set; }
 
         public TimeSpan CookingTime { get; set; }
 
-        public int PortionCount { get; set; }
+        public int PortionsCount { get; set; }
+
+        public string OriginalUrl { get; set; }
 
         public string AddedByUserId { get; set; }
 

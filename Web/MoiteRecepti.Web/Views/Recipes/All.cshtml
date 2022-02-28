@@ -1,0 +1,23 @@
+﻿@model MoiteRecepti.Web.ViewModels.Recipe.RecipesListViewModel
+@{
+    ViewData["Title"] = "All recipes, Page " + Model.PageNumber;
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    @foreach (var recipe in this.Model.Recipes)
+    {
+        <div class="media col-md-4">
+            <img class="mr-3" src="@recipe.ImageUrl" alt="image" width="100">
+            <div class="media-body">
+                <h5 class="mt-0">@recipe.Name</h5>
+                @recipe.CategoryName
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<partial name="_PagingPartial" model="@Model"/>
