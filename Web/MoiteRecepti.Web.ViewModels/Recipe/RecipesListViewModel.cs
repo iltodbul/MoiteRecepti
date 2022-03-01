@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MoiteRecepti.Web.ViewModels.Recipe
+﻿namespace MoiteRecepti.Web.ViewModels.Recipe
 {
+    using System;
     using System.Collections.Generic;
 
     public class RecipesListViewModel : PagingViewModel

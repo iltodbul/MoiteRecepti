@@ -1,9 +1,12 @@
-﻿namespace MoiteRecepti.Web.Controllers
+﻿using System;
+
+namespace MoiteRecepti.Web.Controllers
 {
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MoiteRecepti.Data.Models;
@@ -15,15 +18,18 @@
         private readonly ICategoryService categoryService;
         private readonly IRecipeService recipeService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment environment;
 
         public RecipesController(
             ICategoryService categoryService,
             IRecipeService recipeService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment environment)
         {
             this.categoryService = categoryService;
             this.recipeService = recipeService;
             this.userManager = userManager;
+            this.environment = environment;
         }
 
         [Authorize]
@@ -49,8 +55,19 @@
 
             // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
+            var imagePath = $"{this.environment.WebRootPath}/images";
 
-            await this.recipeService.CreateAsync(inputModel, user.Id);
+            try
+            {
+                await this.recipeService.CreateAsync(inputModel, user.Id, imagePath);
+            }
+            catch (Exception e)
+            {
+                this.ModelState.AddModelError(string.Empty, e.Message);
+                inputModel.Categories = this.categoryService.GetAllAsKeyValuePair();
+                return this.View(inputModel);
+            }
+
 
             // TODO: Redirect to recipe info page.
             return this.Redirect("/");

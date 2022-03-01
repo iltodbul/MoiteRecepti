@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -12,16 +13,19 @@
 
     public class RecipeService : IRecipeService
     {
+        private readonly string[] AllowedExtensions = new[] { ".png", ".jpeg", ".gif" };
         private readonly IDeletableEntityRepository<Recipe> recipeRepository;
         private readonly IDeletableEntityRepository<Ingredient> ingredientRepository;
 
-        public RecipeService(IDeletableEntityRepository<Recipe> recipeRepository, IDeletableEntityRepository<Ingredient> ingredientRepository)
+        public RecipeService(
+            IDeletableEntityRepository<Recipe> recipeRepository,
+            IDeletableEntityRepository<Ingredient> ingredientRepository)
         {
             this.recipeRepository = recipeRepository;
             this.ingredientRepository = ingredientRepository;
         }
 
-        public async Task CreateAsync(CreateRecipeInputModel input, string userId)
+        public async Task CreateAsync(CreateRecipeInputModel input, string userId, string imagePath)
         {
             var recipe = new Recipe
             {
@@ -47,6 +51,28 @@
                     Ingredient = ingredient,
                     Quantity = inputIngredient.Quantity,
                 });
+            }
+
+            Directory.CreateDirectory($"{imagePath}/recipes");
+            // wwwroot/images/recipes/{id}.{.ext}
+            foreach (var image in input.Images)
+            {
+                var extension = Path.GetExtension(image.FileName);
+                if (!this.AllowedExtensions.Contains(extension))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var dbImage = new Image
+                {
+                    AddedByUserId = userId,
+                    Extension = extension,
+                };
+                recipe.Images.Add(dbImage);
+
+                var physicalPath = $"{imagePath}/recipes/{dbImage.Id}{extension}";
+                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
             }
 
             await this.recipeRepository.AddAsync(recipe);
