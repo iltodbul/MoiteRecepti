@@ -1,14 +1,13 @@
-﻿using System;
-
-namespace MoiteRecepti.Web.Controllers
+﻿namespace MoiteRecepti.Web.Controllers
 {
-    using System.Security.Claims;
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+
     using MoiteRecepti.Data.Models;
     using MoiteRecepti.Services.Data;
     using MoiteRecepti.Web.ViewModels.Recipe;
@@ -68,7 +67,6 @@ namespace MoiteRecepti.Web.Controllers
                 return this.View(inputModel);
             }
 
-
             // TODO: Redirect to recipe info page.
             return this.Redirect("/");
         }
@@ -85,6 +83,12 @@ namespace MoiteRecepti.Web.Controllers
                 Recipes = this.recipeService.GetAll<RecipeInListViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);
+        }
+
+        public IActionResult ById(int id)
+        {
+            var recipe = this.recipeService.GetById<SingleRecipeViewModel>(id);
+            return this.View(recipe);
         }
     }
 }

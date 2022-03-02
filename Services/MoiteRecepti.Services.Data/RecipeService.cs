@@ -13,7 +13,7 @@
 
     public class RecipeService : IRecipeService
     {
-        private readonly string[] AllowedExtensions = new[] { ".png", ".jpeg", ".gif" };
+        private readonly string[] allowedExtensions = new[] { ".png", ".jpeg", ".gif" };
         private readonly IDeletableEntityRepository<Recipe> recipeRepository;
         private readonly IDeletableEntityRepository<Ingredient> ingredientRepository;
 
@@ -54,11 +54,12 @@
             }
 
             Directory.CreateDirectory($"{imagePath}/recipes");
+
             // wwwroot/images/recipes/{id}.{.ext}
             foreach (var image in input.Images)
             {
                 var extension = Path.GetExtension(image.FileName);
-                if (!this.AllowedExtensions.Contains(extension))
+                if (!this.allowedExtensions.Contains(extension))
                 {
                     throw new Exception($"Invalid image extension {extension}");
                 }
@@ -90,13 +91,23 @@
                 .ToList();
 
             // 1-12-page 1 propuskame 0 formula: (page-1)*itemsPerPage
-            // 13-24-page 2
+            // 13-24-page 2 propuskame 1
             return recipes;
         }
 
         public int GetCount()
         {
             return this.recipeRepository.All().Count();
+        }
+
+        public T GetById<T>(int id)
+        {
+            var recipe = this.recipeRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+            return recipe;
         }
     }
 }

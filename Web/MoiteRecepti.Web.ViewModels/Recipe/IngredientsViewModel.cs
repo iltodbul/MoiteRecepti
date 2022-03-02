@@ -1,6 +1,9 @@
 ﻿namespace MoiteRecepti.Web.ViewModels.Recipe
 {
-    public class RecipeIngredientInputModel
+    using MoiteRecepti.Data.Models;
+    using MoiteRecepti.Services.Mapping;
+
+    public class IngredientsViewModel : IMapFrom<RecipeIngredient>
     {
         public string IngredientName { get; set; }
 

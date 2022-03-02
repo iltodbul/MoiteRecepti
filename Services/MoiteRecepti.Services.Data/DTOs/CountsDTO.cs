@@ -1,9 +1,5 @@
 ﻿namespace MoiteRecepti.Services.Data.DTOs
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     public class CountsDTO
     {
         public int CategoriesCount { get; set; }
