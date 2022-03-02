@@ -43,7 +43,7 @@
         {
             configuration.CreateMap<Recipe, SingleRecipeViewModel>()
                 .ForMember(x => x.AverageVote, opt =>
-                    opt.MapFrom(x => x.Votes.Average(v => v.Value)))
+                    opt.MapFrom(x => x.Votes.Count == 0 ? 0 : x.Votes.Average(v => v.Value)))
                 .ForMember(x => x.ImageUrl, option =>
                     option.MapFrom(x =>
                         x.Images.FirstOrDefault().RemoteImageUrl != null
