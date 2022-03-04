@@ -27,9 +27,9 @@
                     RecipeId = recipeId,
                     UserId = userId,
                 };
-            }
 
-            await this.voteRepository.AddAsync(vote);
+                await this.voteRepository.AddAsync(vote);
+            }
 
             vote.Value = value;
             await this.voteRepository.SaveChangesAsync();
